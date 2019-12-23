@@ -13,7 +13,7 @@ func HelloWorldWorkflow(ctx workflow.Context, value string) error {
 		panic(err)
 	}
 	ao := workflow.ActivityOptions{
-		TaskList:               "HelloWorldWorker",
+		TaskList:               "helloworld-worker",
 		ScheduleToCloseTimeout: time.Second * 60,
 		ScheduleToStartTimeout: time.Second * 60,
 		StartToCloseTimeout:    time.Second * 60,
@@ -23,13 +23,14 @@ func HelloWorldWorkflow(ctx workflow.Context, value string) error {
 	ctx = workflow.WithActivityOptions(ctx, ao)
 	logger.Info("helloworld workflow started")
 
-	future := workflow.ExecuteActivity(ctx, "HelloworldActivity", value)
-	var result string
-	if err := future.Get(ctx, &result); err != nil {
+	var helloworldResult string
+	err = workflow.ExecuteActivity(ctx, "HelloworldActivity", "World ! Hrishi here.....").Get(ctx, &helloworldResult)
+	if err != nil {
+		logger.Error("Activity failed.", zap.Error(err))
 		return err
 	}
 
-	logger.Info("Workflow completed.", zap.String("Result", result))
+	logger.Info("Workflow completed.", zap.String("Result", helloworldResult))
 
 	return nil
 }

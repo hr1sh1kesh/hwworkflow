@@ -36,7 +36,6 @@ func main() {
 }
 
 func startWorkflow() {
-	logger.Info("Start workflow method")
 	workflowOptions := client.StartWorkflowOptions{
 		ID:                              fmt.Sprintf("helloworld_%s", uuid.New()),
 		TaskList:                        "helloworld-worker",
