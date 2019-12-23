@@ -24,7 +24,7 @@ func HelloWorldWorkflow(ctx workflow.Context, value string) error {
 	logger.Info("helloworld workflow started")
 
 	var helloworldResult string
-	err = workflow.ExecuteActivity(ctx, "HelloworldActivity", "World ! Hrishi here.....").Get(ctx, &helloworldResult)
+	err = workflow.ExecuteActivity(ctx, "main.HelloworldActivity", "World ! Hrishi here.....").Get(ctx, &helloworldResult)
 	if err != nil {
 		logger.Error("Activity failed.", zap.Error(err))
 		return err
