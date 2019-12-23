@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/hr1sh1kesh/hwworkflow/wf"
 	"go.uber.org/cadence/.gen/go/cadence/workflowserviceclient"
 	"go.uber.org/cadence/client"
 	"go.uber.org/cadence/workflow"
@@ -21,7 +22,7 @@ var ClientName = "helloworld-worker"
 var CadenceService = "cadence-frontend"
 
 func init() {
-	workflow.Register(HelloWorldWorkflow)
+	workflow.Register(wf.HelloWorldWorkflow)
 }
 
 var logger *zap.Logger
@@ -52,7 +53,7 @@ func startWorkflow() {
 	} else {
 		logger.Info("Domain successfully registered.", zap.String("Domain", Domain))
 	}
-	workflowClient.StartWorkflow(context.Background(), workflowOptions, HelloWorldWorkflow, "World ! Hrishi Here.... ")
+	workflowClient.StartWorkflow(context.Background(), workflowOptions, wf.HelloWorldWorkflow, "World ! Hrishi Here.... ")
 }
 
 func buildCadenceClient() workflowserviceclient.Interface {
